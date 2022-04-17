@@ -10,37 +10,40 @@ import { BrandService } from 'src/app/services/brand.service';
 export class BrandComponent implements OnInit {
 
   brands:Brand[] = [];
-  currentBrand?:Brand
-  constructor(private brandService:BrandService) { }
+  currentBrand?:Brand;
+
+
+  constructor(private brandService: BrandService) { }
 
   ngOnInit(): void {
     this.getBrands();
   }
 
   getBrands(){
-    this.brandService.getBrands().subscribe(response=>{
-      this.brands = response.data
+    this.brandService.getBrands().subscribe(response => {
+      this.brands = response.data;
     })
+
   }
   setCurrentBrand(brand:Brand){
     this.currentBrand = brand;
   }
+  clearCurrentBrand(){
+    this.currentBrand=undefined;
+  }
   getCurrentBrandClass(brand:Brand){
+
     if(brand==this.currentBrand){
       return "list-group-item active"
     }else{
-      return "list-group-item"
+      return "list-group-item "
     }
-  }
-
-  setAllBrand(){
-    this.currentBrand = undefined;
   }
   getAllBrandClass(){
     if(!this.currentBrand){
       return "list-group-item active"
     }else{
-      return "list-group-item"
+      return "list-group-item "
     }
   }
 }

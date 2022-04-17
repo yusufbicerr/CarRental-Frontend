@@ -9,13 +9,13 @@
             <th>Gunluk Fiyat</th>
         </tr>
     </thead>
-    <tr *ngFor="let car of cars">
-        <td>{{car.carId}}</td>
-        <td>{{car.description}}</td>
-        <td>{{car.brandName}}</td>
-        <td>{{car.colorName}}</td>
-        <td>{{car.modelYear}}</td>
-        <td>{{car.dailyPrice}}</td>
+    <tr *ngFor="let carDetail of carDetails">
+        <td>{{carDetail.carId}}</td>
+        <td>{{carDetail.description}}</td>
+        <td>{{carDetail.brandName}}</td>
+        <td>{{carDetail.colorName}}</td>
+        <td>{{carDetail.modelYear}}</td>
+        <td>{{carDetail.dailyPrice}}</td>
     </tr>
 </table>
 
