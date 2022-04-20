@@ -1,21 +1,27 @@
-<table class="table">
-    <thead>
-        <tr>
-            <th>Id</th>
-            <th>Adi</th>
-            <th>Marka</th>
-            <th>Renk</th>
-            <th>Model</th>
-            <th>Gunluk Fiyat</th>
-        </tr>
-    </thead>
-    <tr *ngFor="let carDetail of carDetails">
-        <td>{{carDetail.carId}}</td>
-        <td>{{carDetail.description}}</td>
-        <td>{{carDetail.brandName}}</td>
-        <td>{{carDetail.colorName}}</td>
-        <td>{{carDetail.modelYear}}</td>
-        <td>{{carDetail.dailyPrice}}</td>
-    </tr>
-</table>
+<div  class="container">
+    <div class="row "> 
+      <div *ngFor="let carDetail of carDetails" class="col-md-4">
 
+        <img *ngIf="carDetail.imagePath"
+         routerLink="/cars/cardetail/{{ carDetail.carId }}" 
+
+         [src]="carDetail.imagePath.length !== 0 ? imageUrl+carDetail.imagePath[0] : imageUrl + 'DefaultImage.jpg'"
+          style="object-fit: cover;"  class="card-img-top" alt="...">
+
+          <div class="card-body" style="text-align: center">
+            <h4 class="card-title">{{carDetail.brandName}}</h4>
+          </div>
+  
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item">Marka: {{carDetail.brandName}} {{carDetail.description}}</li>
+            <li class="list-group-item">Yıl: {{carDetail.modelYear}}</li>
+            <li class="list-group-item">Renk: {{carDetail.colorName}}</li>
+            <li class="list-group-item">Fiyat: {{carDetail.dailyPrice}} TL/Gün</li>
+          </ul>
+  
+          <div class="card-body" style="text-align: center;">
+            <button routerLink="/cars/cardetail/{{ carDetail.carId }}"   type="button" class="btn btn-warning" style="width: 35%;">İncele</button>           
+          </div>
+        </div>
+    </div>
+</div>

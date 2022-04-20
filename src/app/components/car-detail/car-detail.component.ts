@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Brand } from 'src/app/models/brand';
 import { CarDetail } from 'src/app/models/carDetail';
 import { CarImage } from 'src/app/models/carImage';
+import { CarService } from 'src/app/services/car.service';
 import { CarDetailService } from 'src/app/services/carDetail';
 import { CarImageService } from 'src/app/services/carImage.service';
 
@@ -13,37 +14,46 @@ import { CarImageService } from 'src/app/services/carImage.service';
 })
 export class CarDetailComponent implements OnInit {
 
-  currentCars:CarDetail[]=[];
-  brands:Brand[]=[];
-  carImages:CarImage[]=[];
-  imagePath: string = 'https://localhost:44356/';
-  constructor(
-    private carImageService:CarImageService,
-    private carDetailService:CarDetailService,
-    private activatedRoute:ActivatedRoute
+  cars: CarDetail[] = [];
+  carImagePaths:string[] = [];
+  carDetail: CarDetail;
+  dataLoaded = false;
+  imageUrl:string="https://localhost:44356/Uploads/images/"
+  //--for rental
+  
+ 
+  
+  
+  carImages:CarImage[]=[];//slider için
+
+  constructor(private carImageService: CarImageService,
+    private carService: CarService,
+    private activatedRoute: ActivatedRoute,
     ) { }
 
   ngOnInit(): void {
-    this.activatedRoute.params.subscribe((params) => {
-      if (params['id']) {
-        this.getCarDetail(params['id']);
-      }
-      this.getImagesByCarId(params['id']);
 
-    });
+
+    this.activatedRoute.params.subscribe(params => {//car id verilirse ki arabaya tiklayinca verilmis olur: icerdeki emthodlari calistir
+
+      if(params['carId']){
+          this.getCarsDetailsByCarId(params['carId'])
+         // this.getImagesByCarId(params['carId'])
+
+        }
+    })
+
+    
   }
 
-  getCarDetail(id: number) {
-    this.carDetailService.getCarDetail(id).subscribe((response) => {
-      this.currentCars = response.data;
-    });
-  }
+  getCarsDetailsByCarId(carId: number){//details sayfamızdaki araç detaylarını çekiyor
+    this.carService.getCarDetailByCar(carId).subscribe((response)=>{
+      this.cars=response.data
+      this.carDetail = response.data[0];//sıfırıncı eement bilgilerin olduğu kısım,sonra mesaj felan geliyor
+      
+      this.carImagePaths=this.carDetail.imagePath
+      this.dataLoaded = true;
 
-  getImagesByCarId(id: number) {
-    this.carImageService.getImagesByCarId(id).subscribe((response) => {
-      this.carImages = response.data;
-      console.log(this.carImageService.getImagesByCarId(id));
-    });
+    })
   }
-
 }

@@ -12,6 +12,8 @@ import { CarService } from 'src/app/services/car.service';
 export class CarComponent implements OnInit {
 
   carDetails:CarDetail[] = [];
+  imageUrl:string="https://localhost:44356/Uploads/images/"
+
   constructor(private carService:CarService,
     private activatedRoute:ActivatedRoute) { }
 
@@ -45,7 +47,7 @@ export class CarComponent implements OnInit {
   }
 
   getCarsByColor(colorId:number){
-    this.carService.getCarsByBrand(colorId).subscribe(response=>{
+    this.carService.getCarsByColor(colorId).subscribe(response=>{
       this.carDetails = response.data
     })
   }
